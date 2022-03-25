@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">School Notes</string>
+    <!-- NAVBAR ELEMENTS -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_registry">Registro</string>
+    <string name="nav_statistics">Estadisticas</string>
+    <string name="nav_help">Ayuda</string>
+    <!-- FRAGMENT REGISTER -->
+    <string name="register_title">Registrar estudiante</string>
 </resources>

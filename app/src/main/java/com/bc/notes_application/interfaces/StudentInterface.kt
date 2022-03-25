@@ -1,9 +1,9 @@
 package com.bc.notes_application.interfaces
 
-interface StudentInterface {
-    var identification: String
-    var name: String
-    var age: Int
-    var phoneNumber: String
-    var address: String
-}
+data class StudentInterface (
+    var identification: String? = null,
+    var name: String? = null,
+    var age: Int? = null,
+    var phoneNumber: String? = null,
+    var address: String? = null
+)

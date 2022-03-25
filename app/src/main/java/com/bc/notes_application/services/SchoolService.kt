@@ -8,11 +8,11 @@ class SchoolService {
 
         fun getAll(): ArrayList<StudentInterface> = this.students;
 
-        fun addOne(student: StudentInterface): Unit {
+        fun addOne(student: StudentInterface) {
             this.students.add(student)
         }
 
-        fun addMany(students: ArrayList<StudentInterface>): Unit {
+        fun addMany(students: ArrayList<StudentInterface>) {
             for (student: StudentInterface in students) {
                 this.students.add(student)
             }

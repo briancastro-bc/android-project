@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navlink_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/nav_home"/>
+
+    <item
+        android:id="@+id/navlink_registry"
+        android:icon="@drawable/ic_registry"
+        android:title="@string/nav_registry"/>
+
+    <item
+        android:id="@+id/navlink_statistics"
+        android:icon="@drawable/ic_statistics"
+        android:title="@string/nav_statistics"/>
+
+    <item
+        android:id="@+id/navlink_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/nav_help"/>
+</menu>

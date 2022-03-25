@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import com.bc.notes_application.MainActivity
 import com.bc.notes_application.R
 
@@ -12,5 +13,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         val intent = Intent(this, MainActivity::class.java)
+        Handler(Looper.myLooper()!!).postDelayed({
+            startActivity(intent)
+        }, 3000)
     }
 }
