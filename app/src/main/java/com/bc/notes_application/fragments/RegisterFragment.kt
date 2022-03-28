@@ -9,29 +9,22 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.bc.notes_application.R
-import com.bc.notes_application.interfaces.StudentInterface
+import com.bc.notes_application.interfaces.Student
 import com.bc.notes_application.services.SchoolService
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var identification: EditText? = null
-    private var name: EditText? = null
-    private var age: EditText? = null
-    private var phoneNumber: EditText? = null
-    private var address: EditText? = null
-    private var submitButton: Button? = null
+    var identification: EditText? = null
+    var name: EditText? = null
+    var age: EditText? = null
+    var phoneNumber: EditText? = null
+    var address: EditText? = null
+    var subject: EditText? = null
+    var grades: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,43 +32,51 @@ class RegisterFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        this.initComponents()
-        this.submitButton?.setOnClickListener {
-            this.onSubmitInformation()
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
     override fun onStart() {
         super.onStart()
+        init()
+        val submitButton: Button? = view?.findViewById(R.id.input_button)
+        submitButton?.setOnClickListener {
+            this.onSubmit()
+        }
     }
 
-    private fun initComponents() {
-        this.identification = view?.findViewById(R.id.container)
-        this.name = view?.findViewById(R.id.input_name)
-        this.age = view?.findViewById(R.id.input_age)
-        this.phoneNumber = view?.findViewById(R.id.input_phone_number)
-        this.address = view?.findViewById(R.id.input_address)
-        this.submitButton = view?.findViewById(R.id.input_button)
+    private fun init() {
+        identification = view?.findViewById(R.id.input_identification)
+        name = view?.findViewById(R.id.input_name)
+        age = view?.findViewById(R.id.input_age)
+        phoneNumber = view?.findViewById(R.id.input_phone_number)
+        address = view?.findViewById(R.id.input_address)
+        subject = view?.findViewById(R.id.input_subject)
+        grades = view?.findViewById(R.id.input_grades)
     }
 
-    private fun onSubmitInformation() {
-        val student = StudentInterface(
-            identification = this.identification?.text.toString(),
-            name = this.name?.text.toString(),
+    private fun onSubmit() {
+        var grades = this.grades?.text.toString().split(',')
+        val student = Student(
+            identification = identification?.text.toString(),
+            name = name?.text.toString(),
             age = this.age?.text.toString().toInt(),
-            phoneNumber = this.phoneNumber?.text.toString(),
-            address = this.address?.text.toString()
+            phoneNumber = phoneNumber?.text.toString(),
+            address = address?.text.toString(),
+            subject = subject?.text.toString(),
+            grades = grades
         )
         SchoolService.addOne(student)
-        Toast.makeText(context, "Fue registrado el usuario ${student.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Fue registrado el usuario ${student.name}. Edad: ${student.age}. Notas: ${student.grades}", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun validate() {
+
     }
 
     companion object {
