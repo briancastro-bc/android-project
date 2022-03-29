@@ -1,5 +1,6 @@
 package com.bc.notes_application.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.bc.notes_application.R
+import com.bc.notes_application.activities.DetailActivity
 import com.bc.notes_application.interfaces.Student
 import com.bc.notes_application.services.SchoolService
+import java.lang.Exception
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -23,7 +26,7 @@ class RegisterFragment : Fragment() {
     var age: EditText? = null
     var phoneNumber: EditText? = null
     var address: EditText? = null
-    var subject: EditText? = null
+    var subjects: EditText? = null
     var grades: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,27 +59,42 @@ class RegisterFragment : Fragment() {
         age = view?.findViewById(R.id.input_age)
         phoneNumber = view?.findViewById(R.id.input_phone_number)
         address = view?.findViewById(R.id.input_address)
-        subject = view?.findViewById(R.id.input_subject)
+        subjects = view?.findViewById(R.id.input_subjects)
         grades = view?.findViewById(R.id.input_grades)
     }
 
     private fun onSubmit() {
         var grades = this.grades?.text.toString().split(',')
-        val student = Student(
-            identification = identification?.text.toString(),
-            name = name?.text.toString(),
-            age = this.age?.text.toString().toInt(),
-            phoneNumber = phoneNumber?.text.toString(),
-            address = address?.text.toString(),
-            subject = subject?.text.toString(),
-            grades = grades
-        )
-        SchoolService.addOne(student)
-        Toast.makeText(context, "Fue registrado el usuario ${student.name}. Edad: ${student.age}. Notas: ${student.grades}", Toast.LENGTH_SHORT).show()
+        var subjects = this.subjects?.text.toString().split(',')
+        try {
+            if(validate(grades, subjects)) {
+                val student = Student(
+                    identification = identification?.text.toString(),
+                    name = name?.text.toString(),
+                    age = this.age?.text.toString().toInt(),
+                    phoneNumber = phoneNumber?.text.toString(),
+                    address = address?.text.toString(),
+                    subjects = subjects,
+                    grades = grades
+                )
+                val intent = Intent(activity, DetailActivity::class.java)
+                SchoolService.addOne(student)
+                Toast.makeText(context, "Fue registrado el usuario ${student.name}. Edad: ${student.age}. Notas: ${student.grades}", Toast.LENGTH_SHORT).show()
+                intent.putExtra("student_id", student.identification)
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "Deben haber la misma cantidad de materias y notas", Toast.LENGTH_LONG).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, "Debes llenar la informacion", Toast.LENGTH_LONG).show()
+        }
     }
 
-    private fun validate() {
-
+    private fun validate(grades: List<String>, subjects: List<String>, vararg args: String): Boolean {
+        if (grades.count() == subjects.count()) {
+            return true
+        }
+        return  false
     }
 
     companion object {

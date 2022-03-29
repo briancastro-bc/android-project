@@ -8,6 +8,10 @@ class SchoolService {
 
         fun getAll(): MutableList<Student> = this.students;
 
+        fun getOne(identification: String?): Student? {
+            return students.find { student ->  student.identification == identification }
+        }
+
         fun addOne(student: Student) {
             this.students.add(student)
         }

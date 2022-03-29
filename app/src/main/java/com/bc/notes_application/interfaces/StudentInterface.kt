@@ -6,6 +6,6 @@ data class Student (
     var age: Int? = null,
     var phoneNumber: String,
     var address: String,
-    var subject: String,
+    var subjects: List<String>,
     var grades: List<String>
 )
