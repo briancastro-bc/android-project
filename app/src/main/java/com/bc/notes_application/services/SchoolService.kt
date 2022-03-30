@@ -28,7 +28,7 @@ class SchoolService {
 
         fun average(student: Student): Double {
             var sum: Double = 0.0
-            for(grade in student?.grades) {
+            for(grade in student?.grades!!) {
                 sum += grade
             }
             return (sum / student.grades.count())
@@ -39,6 +39,11 @@ class SchoolService {
                 return true
             }
             return false
+        }
+
+        fun showStudentsStatistics(): Map<String, Any> {
+
+            return mapOf()
         }
     }
 }
