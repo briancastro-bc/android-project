@@ -21,6 +21,8 @@ class DetailActivity : AppCompatActivity() {
     private var address: TextView? = null
     private var subjects: TextView? = null
     private var grades: TextView? = null
+    private var status: TextView? = null
+    private var average: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +33,21 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        showStudentInformation()
+    }
+
+    private fun showStudentInformation() {
         try {
             student = SchoolService.getOne(studentId)
-            //var subjects2: String = student?.subjects!!.forEach {
-                //return "${it} "
-            //}
-            var subjects: String = ""
-            for (subject in student!!.subjects) {
-                subjects += "${subject} "
+            var subjects: String = "Materias: "
+            student?.subjects!!.forEach {
+                subjects += "${it} "
             }
+            var grades: String = "Notas: "
+            student?.grades!!.forEach{
+                grades += "${it} "
+            }
+            var average = SchoolService.average(student!!)
             title?.text = "Detalles del estudiante ${student?.name!!.split(' ')[0]}"
             identification?.text = student?.identification
             name?.text = student?.name
@@ -47,8 +55,18 @@ class DetailActivity : AppCompatActivity() {
             phoneNumber?.text = student?.phoneNumber
             address?.text = student?.address
             this.subjects?.text = subjects
+            this.grades?.text = grades
+            this.average?.text = average.toString()
+            if (average > 35) {
+                status?.text = "Gana el periodo"
+            } else {
+                if(SchoolService.canRetakeSubject(average)) {
+                    status?.text = "Pierde con posibilidad de recuperacion"
+                } else {
+                    status?.text = "Perdio el periodo"
+                }
+            }
         } catch (e: Exception) {
-            //Do something
             Toast.makeText(this, "No pudimos mostrar los datos", Toast.LENGTH_LONG).show()
         }
     }
@@ -62,5 +80,7 @@ class DetailActivity : AppCompatActivity() {
         address = findViewById(R.id.address)
         subjects = findViewById(R.id.subjects)
         grades = findViewById(R.id.grades)
+        status = findViewById(R.id.status)
+        average = findViewById(R.id.average)
     }
 }

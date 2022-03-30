@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">School Notes</string>
+    <string name="app_introduction">
+        Gestiona todos tus estudiantes, revisa las estadisticas y
+        calcula los promedios de la notas en un solo paso.
+    </string>
     <!-- NAVBAR ELEMENTS -->
     <string name="nav_home">Inicio</string>
     <string name="nav_registry">Registro</string>

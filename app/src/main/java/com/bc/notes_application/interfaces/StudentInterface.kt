@@ -7,5 +7,5 @@ data class Student (
     var phoneNumber: String,
     var address: String,
     var subjects: List<String>,
-    var grades: List<String>
+    var grades: List<Int>
 )

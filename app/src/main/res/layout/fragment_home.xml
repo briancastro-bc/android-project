@@ -4,12 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     tools:context=".fragments.HomeFragment">
 
     <ImageView
         android:id="@+id/background_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginVertical="15sp"/>
+
+    <TextView
+        android:id="@+id/app_introduction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:srcCompat="@drawable/school" />
+        android:text="@string/app_introduction"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:layout_marginVertical="20sp"/>
 
 </LinearLayout>

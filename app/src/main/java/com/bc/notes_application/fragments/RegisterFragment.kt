@@ -64,10 +64,14 @@ class RegisterFragment : Fragment() {
     }
 
     private fun onSubmit() {
-        var grades = this.grades?.text.toString().split(',')
-        var subjects = this.subjects?.text.toString().split(',')
         try {
-            if(validate(grades, subjects)) {
+            var intGrades: MutableList<Int> = arrayListOf()
+            var grades: List<String> = this.grades?.text.toString().split(",")
+            grades.forEach {
+                intGrades.add(it.trim(' ').toInt())
+            }
+            var subjects: List<String> = this.subjects?.text.toString().split(',')
+            if(validate(intGrades, subjects)) {
                 val student = Student(
                     identification = identification?.text.toString(),
                     name = name?.text.toString(),
@@ -75,25 +79,30 @@ class RegisterFragment : Fragment() {
                     phoneNumber = phoneNumber?.text.toString(),
                     address = address?.text.toString(),
                     subjects = subjects,
-                    grades = grades
+                    grades = intGrades
                 )
                 val intent = Intent(activity, DetailActivity::class.java)
                 SchoolService.addOne(student)
-                Toast.makeText(context, "Fue registrado el usuario ${student.name}. Edad: ${student.age}. Notas: ${student.grades}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Fue registrado el usuario ${student.name}.", Toast.LENGTH_SHORT).show()
                 intent.putExtra("student_id", student.identification)
                 startActivity(intent)
-            } else {
-                Toast.makeText(context, "Deben haber la misma cantidad de materias y notas", Toast.LENGTH_LONG).show()
             }
         } catch (e: Exception) {
             Toast.makeText(context, "Debes llenar la informacion", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun validate(grades: List<String>, subjects: List<String>, vararg args: String): Boolean {
+    private fun validate(grades: List<Int>, subjects: List<String>, vararg args: String): Boolean {
         if (grades.count() == subjects.count()) {
+            for(grade: Int in grades) {
+                if(grade > 50 || grade < 0) {
+                    Toast.makeText(context, "El rango de cada nota es entre 0 y 50", Toast.LENGTH_LONG).show()
+                    return false
+                }
+            }
             return true
         }
+        Toast.makeText(context, "Debe haber la misma cantidad de notas y materias", Toast.LENGTH_LONG).show()
         return  false
     }
 

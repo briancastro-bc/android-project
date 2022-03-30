@@ -25,5 +25,20 @@ class SchoolService {
         fun removeOne(student: Student): Unit {
             this.students.remove(student)
         }
+
+        fun average(student: Student): Double {
+            var sum: Double = 0.0
+            for(grade in student?.grades) {
+                sum += grade
+            }
+            return (sum / student.grades.count())
+        }
+
+        fun canRetakeSubject(average: Double): Boolean {
+            if(average > 25) {
+                return true
+            }
+            return false
+        }
     }
 }
