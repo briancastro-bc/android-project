@@ -40,10 +40,5 @@ class SchoolService {
             }
             return false
         }
-
-        fun showStudentsStatistics(): Map<String, Any> {
-
-            return mapOf()
-        }
     }
 }
